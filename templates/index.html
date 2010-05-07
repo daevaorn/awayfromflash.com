@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<style type="text/css">
+    .runaway {
+        margin-bottom: 20px;
+    }
+    .runaway h4 {
+        margin-bottom: 0;
+    }
+    .url {
+        padding-left: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div>
+    {% if notify %}
+        <h4>Your new runaaway is waiting for moderation.</h4>
+        <br>
+    {% endif %}
+    <h3><a href="/add/">Add new runaway!</a></h3>
+</div>
+<br>
+<h3>Latest:</h3>
+<div>
+    <ul>
+        {% for runaway in runaways_page.object_list %}
+        <li class="runaway">
+            <h4><a href="/{{ runaway.key().id() }}/">{{ runaway.title }}</a></h4>
+            <div class="url"><a href="{{ runaway.url }}" rel="nofollow">{{ runaway.url }}</div>
+            <div><a href="{{ runaway.proof_link }}">Proof link</a> quote:</div>
+            <div><i>{{ runaway.quote }}</i></div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if runaways_page.has_other_pages() %}
+    <br>
+    <div>
+        {% if runaways_page.has_next() %}
+            <a href="?page={{ runaways_page.next_page_number() }}">Older</a>
+        {% endif %}
+        {% if runaways_page.has_previous() %}
+            <a href="?page={{ runaways_page.previous_page_number() }}">Newer</a>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

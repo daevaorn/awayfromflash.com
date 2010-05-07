@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}AwayFromFlash{% endblock %}</title>
+
+        <!-- Framework CSS -->
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/screen.css" type="text/css" media="screen, projection" >
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/print.css" type="text/css" media="print" >
+        <!--[if IE]><link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection" ><![endif]-->
+
+        <!-- Import fancy-type plugin. -->
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" >
+
+        <link rel="alternate" type="application/atom+xml" href="/feed/">
+
+        {% block extrahead %}{% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div id="header" class="span-16">
+                {% if request.path == '/' %}
+                    <h2>AwayFromFlash.com</h2>
+                {% else %}
+                    <h2><a href="/">AwayFromFlash.com</a></h2>
+                {% endif %}
+                <div class="span-13"><p class="alt">Runaways from Adobe Flash</p></div>
+                <div class="span-3 last">
+                    <a href="/feed/"><img src="{{ MEDIA_URL }}images/feed.png"></a>
+                    <a href="http://www.twitter.com/awayfromflash">
+                        <img src="http://twitter-badges.s3.amazonaws.com/t_logo-b.png" alt="Follow awayfromflash on Twitter" width="32" height="32"/>
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div id="content_container"class="span-16 last">
+                <div id="content" class='prepend-1'>
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+            <hr>
+            <div id="footer" class="span-16 last">
+                <div id="links">
+                    <p>© 2010 awayfromflash.com</p>
+                </div>
+            <div>
+        </div>
+    </body>
+    {% if not debug %}
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-2177231-17']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+              var ga = document.createElement('script');
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+                  'http://www') + '.google-analytics.com/ga.js';
+              ga.setAttribute('async', 'true');
+              document.documentElement.firstChild.appendChild(ga);
+            })();
+        </script>
+    {% endif %}
+</html>

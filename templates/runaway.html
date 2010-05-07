@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h4>{{ runaway.title }}</h4>
+    <br>
+    <div>Url: <a href="{{ runaway.url }}" rel="nofollow">{{ runaway.url }}</a></div>
+    <div><a href="{{ runaway.proof_link }}">Proof link</a> quote:</div>
+    <div><i>{{ runaway.quote }}</i></div>
+    {% if runaway.text %}
+        <br>
+        <div>{{ runaway.text }}</div>
+    {% endif %}
+</div>
+{% endblock %}

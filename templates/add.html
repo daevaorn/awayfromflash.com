@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<style type="text/css">
+    p label {
+        display: block;
+        width: 300px;
+    }
+    p input {
+        width: 350px;
+    }
+    #id_add {
+        width: 50px;
+    }
+    .err {
+        color: red;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h4>Note that all new runaways have to be approved by moderator.</h4>
+<form method="POST" action="/add/">
+    {% if errors %}
+    <p>
+        {% for error in errors %}
+        <span class="err">{{ error }}</span><br>
+        {% endfor %}
+    </p>
+    <br>
+    {% endif %}
+    <p>
+        <label for="id_title">Title (project name with some explanation)</label>
+        <input type="text" name="title" id="id_title" value="{{ data.title }}">
+    </p>
+    <p>
+        <label for="id_url">Project url</label>
+        <input type="text" name="url" id="id_url" value="{{ data.url }}">
+    </p>
+    <p>
+        <label for="id_proof_link">Proof link (blog post, news entry, developers' tweet)</label>
+        <input type="text" name="proof_link" id="id_proof_link" value="{{ data.proof_link }}">
+    </p>
+    <p>
+        <label for="id_quote">Quote (from proof link)</label>
+        <textarea name="quote" id="id_quote">{{ data.quote }}</textarea>
+    </p>
+    <p>
+        <label for="id_text">Text (description)</label>
+        <textarea name="text" id="id_text">{{ data.text }}</textarea>
+    </p>
+    <p>
+        <input type="submit" id="id_add" value="Add">
+    </p>
+</form>
+{% endblock %}

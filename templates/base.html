@@ -33,7 +33,7 @@
             </div>
             <hr>
             <div id="content_container"class="span-16 last">
-                <div id="content" class='prepend-1'>
+                <div id="content">
                     {% block content %}{% endblock %}
                 </div>
             </div>
@@ -45,7 +45,8 @@
             <div>
         </div>
     </body>
-    {% if not debug %}
+    {% block afterbody %}{% endblock %}
+    {% if not DEBUG %}
         <script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-2177231-17']);

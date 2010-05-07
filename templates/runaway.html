@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+{% if DEBUG %}
+    <script type="text/javascript">
+        var disqus_developer = 1;
+    </script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <div>
     <h4>{{ runaway.title }}</h4>
@@ -12,4 +20,35 @@
         <div>{{ runaway.text }}</div>
     {% endif %}
 </div>
+<br>
+<hr>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://awayfromflash.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=awayfromflash">comments powered by Disqus.</a></noscript>
+{% endblock %}
+
+{% block afterbody %}
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/awayfromflash/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
 {% endblock %}

@@ -37,7 +37,7 @@
     line1.Set('chart.fillstyle', ['#fcc']);
 
     line1.Set('chart.labels',
-        [{% for date, _ in timeline|reverse %}"{{ date.strftime("%d %b") }}"{% if not loop.last %},{% endif %}{% endfor %}]
+        [{% for date, _ in timeline %}"{{ date.strftime("%d %b") }}"{% if not loop.last %},{% endif %}{% endfor %}]
     );
 
     line1.Set('chart.gutter', 35);

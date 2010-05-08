@@ -1,7 +1,10 @@
 from app import utils
 
+from itertools import groupby
+
 import bottle
 from google.appengine.ext.webapp import util
+from google.appengine.api import memcache
 
 import atom, paginator
 
@@ -16,9 +19,27 @@ def index():
                                 .page(bottle.request.GET.get('page', 1))
     count = models.Runaway.all_approved().count()
 
+    timeline = memcache.get('timeline')
+    if timeline is None:
+        counter = [0]
+
+        def acc(value):
+            counter[0] += value
+            return counter[0]
+
+        timeline = [
+            (date, acc(len(list(runaways)))) for date, runaways in groupby(
+                                models.Runaway.all_approved(False),
+                                lambda r: r.date.date()
+                            )
+        ]
+
+        memcache.set('timeline', timeline, time=60 * 60)
+
     return template.render('index.html', {
         'runaways_page': runaways_page, 'runaways_count': count,
-        'notify': 'notify' in bottle.request.GET
+        'notify': 'notify' in bottle.request.GET,
+        'timeline': timeline,
     })
 
 @bottle.route('/:id#\d+#/')

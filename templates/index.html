@@ -13,9 +13,48 @@
         margin-bottom: 5px;
     }
 </style>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.common.core.js" ></script>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.common.context.js" ></script>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.common.annotate.js" ></script>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.common.tooltips.js" ></script>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.common.zoom.js" ></script>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.common.resizing.js" ></script>
+<script src="{{ MEDIA_URL }}js/rgraph/libraries/RGraph.line.js" ></script>
+<!--[if IE]><script src="{{ MEDIA_URL }}js/rgraph/excanvas/excanvas.compressed.js"></script><![endif]-->
+
+<script>
+    window.onload = function ()
+    {
+    var line1 = new RGraph.Line('line1',
+        [{% for _, count in timeline %}{{ count }}{% if not loop.last %},{% endif %}{% endfor %}]
+    );
+    line1.Set('chart.title', 'Runaways progress');
+    line1.Set('chart.colors', ['red']);
+    line1.Set('chart.tickmarks', 'dot');
+    line1.Set('chart.linewidth', 1);
+    line1.Set('chart.background.barcolor1', 'white');
+    line1.Set('chart.filled', 'true');
+    line1.Set('chart.fillstyle', ['#fcc']);
+
+    line1.Set('chart.labels',
+        [{% for date, _ in timeline|reverse %}"{{ date.strftime("%d %b") }}"{% if not loop.last %},{% endif %}{% endfor %}]
+    );
+
+    line1.Set('chart.gutter', 35);
+    line1.Set('chart.noaxes', true);
+    line1.Set('chart.background.grid', false);
+    line1.Set('chart.yaxispos', 'right');
+    line1.Set('chart.ymax', {{ runaways_count }});
+    line1.Draw();
+}
+</script>
+
 {% endblock %}
 
 {% block content %}
+<div>
+    <canvas id="line1" width="630" height="250">[Please wait...]</canvas>
+</div>
 <div>
     {% if notify %}
         <h4>Your new runaaway is waiting for moderation.</h4>

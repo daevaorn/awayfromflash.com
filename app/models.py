@@ -15,5 +15,5 @@ class Runaway(db.Model):
     is_approved = db.BooleanProperty(default=False)
 
     @classmethod
-    def all_approved(cls):
-        return cls.all().filter('is_approved = ', True).order('-date')
+    def all_approved(cls, descending=True):
+        return cls.all().filter('is_approved = ', True).order('%sdate' % (descending and '-' or ''))
